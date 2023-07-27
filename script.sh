@@ -8,20 +8,25 @@ if [[ "$EUID" -ne 0 ]]; then
 	exit 1
 fi
 
+file_name="$DIR/config.txt"
+
+if [ ! -f "$file_name" ]; then
+    echo "$file_name not found."
+	exit 1
+fi
+
 apt update 
 apt upgrade -y
 
-
 chmod -R 777 $DIR
 
-# Getting user login and pass from requirements.txt
+# Getting user login and pass from config.txt
 
-new_user=$(grep -m 1 NEW_USER ./requirements.txt | awk -F"=" '{print $2}')
-new_pass=$(grep -m 1 NEW_PASS ./requirements.txt | awk -F"=" '{print $2}')
+new_user=$(grep -m 1 NEW_USER ./config.txt | awk -F"=" '{print $2}')
+new_pass=$(grep -m 1 NEW_PASS ./config.txt | awk -F"=" '{print $2}')
 
 # Adding new user 
 
-useradd -m -s /bin/bash $new_user
 echo "$new_user:$new_pass" | chpasswd
 
 echo
