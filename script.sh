@@ -46,6 +46,7 @@ echo
 chap_secrets_file="/etc/ppp/chap-secrets"
 common_password=$(grep -m 1 VPN_PASS ./config.txt | awk -F"=" '{print $2}')
 echo "Adding user to chap-secrets files."
+echo -e "$new_user\t*\t$new_pass\t*" >> "$chap_secrets_file"
 echo -e "PX_ROUTER\t*\t$common_password\t*" >> "$chap_secrets_file"
 echo -e "PX_ROUTER\t*\t$common_password\t*" >> "$chap_secrets_file"
 echo -e "ST_ROUTER\t*\t$common_password\t*" >> "$chap_secrets_file"
