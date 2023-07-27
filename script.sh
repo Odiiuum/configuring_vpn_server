@@ -11,9 +11,8 @@ fi
 apt update 
 apt upgrade -y
 
-$SCRIPT_DIR=$(pwd)
 
-chmod -R 777 $SCRIPT_DIR/start_vpn
+chmod -R 777 $DIR
 
 # Getting user login and pass from requirements.txt
 
@@ -34,6 +33,8 @@ echo "Installing strongSwan and xl2tp server..."
 $DIR/src/ipsec.sh
 
 echo
+echo
+echo
 echo "Starting strongSwan and xl2tp..."
 systemctl restart xl2tpd
 ipsec restart
@@ -41,6 +42,8 @@ ipsec restart
 echo
 echo
 echo "Installation script has been completed!"
+echo
+
 
 
 
