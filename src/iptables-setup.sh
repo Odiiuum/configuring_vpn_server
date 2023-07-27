@@ -66,8 +66,7 @@ else
     eval iptables -t nat -A POSTROUTING -o $GATE -j MASQUERADE $COMMENT
 fi
 
-DROP="yes"
-read -p "Would you want to disable client-to-client routing? [yes] " ANSDROP
+DROP="no"
 : ${ANSDROP:=$DROP}
 
 if [ "$DROP" == "$ANSDROP" ]; then
