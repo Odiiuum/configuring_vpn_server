@@ -38,16 +38,27 @@ echo "Installing strongSwan and xl2tp server..."
 $DIR/src/ipsec.sh
 
 echo
-echo
-echo
 echo "Starting strongSwan and xl2tp..."
 systemctl restart xl2tpd
 ipsec restart
 
 echo
+chap_secrets_file="/etc/ppp/chap-secrets"
+common_password=$(grep -m 1 VPN_PASS ./config.txt | awk -F"=" '{print $2}')
+echo "Adding user to chap-secrets files."
+echo -e "PX_ROUTER\t*\t$common_password\t*" >> "$chap_secrets_file"
+echo -e "PX_ROUTER\t*\t$common_password\t*" >> "$chap_secrets_file"
+echo -e "ST_ROUTER\t*\t$common_password\t*" >> "$chap_secrets_file"
+echo -e "BS_ROUTER\t*\t$common_password\t*" >> "$chap_secrets_file"
+echo -e "LV_ROUTER1\t*\t$common_password\t*" >> "$chap_secrets_file"
+echo -e "LV_ROUTER2\t*\t$common_password\t*" >> "$chap_secrets_file"
+echo -e "KV_ROUTER\t*\t$common_password\t*" >> "$chap_secrets_file"
+
+echo
 echo
 echo "Installation script has been completed!"
 echo
+
 
 
 
