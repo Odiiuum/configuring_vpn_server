@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-#apt update 
-#apt upgrade -y
-
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 source $DIR/src/env.sh
 
@@ -10,6 +7,13 @@ if [[ "$EUID" -ne 0 ]]; then
 	echo "Sorry, you need to run this as root"
 	exit 1
 fi
+
+apt update 
+apt upgrade -y
+
+$SCRIPT_DIR=$(pwd)
+
+chmod -R 777 $SCRIPT_DIR/start_vpn
 
 # Getting user login and pass from requirements.txt
 
@@ -31,9 +35,10 @@ $DIR/src/ipsec.sh
 
 echo
 echo "Starting strongSwan and xl2tp..."
-service xl2tpd restart
-service strongswan restart
+systemctl restart xl2tpd
+ipsec restart
 
+echo
 echo
 echo "Installation script has been completed!"
 

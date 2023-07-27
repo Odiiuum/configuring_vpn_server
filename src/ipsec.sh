@@ -24,7 +24,6 @@ echo
 echo "Configuring iptables firewall..."
 $DIR/iptables-setup.sh
 
-
 echo
 echo "Configuring DNS parameters..."
 DNS1="8.8.8.8"
@@ -64,9 +63,5 @@ fi
 
 crontab $TMPFILE > /dev/null
 rm $TMPFILE
-
-echo
-echo "Configuring VPN users..."
-$DIR/adduser.sh
 
 
