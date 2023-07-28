@@ -15,6 +15,8 @@ if [ ! -f "$file_name" ]; then
 	exit 1
 fi
 
+# Update && upgrade all packages
+
 apt update 
 apt upgrade -y
 
@@ -29,18 +31,26 @@ new_pass=$(grep -m 1 NEW_PASS ./config.txt | awk -F"=" '{print $2}')
 
 echo "$new_user:$new_pass" | chpasswd
 
+# Configuring network settings 
+
 echo
 echo "Configuring routing..."
 $DIR/src/sysctl.sh
+
+# Installing soft
 
 echo
 echo "Installing strongSwan and xl2tp server..."
 $DIR/src/ipsec.sh
 
+# Restart services
+
 echo
 echo "Starting strongSwan and xl2tp..."
 systemctl restart xl2tpd
 ipsec restart
+
+# Adding users to chap-secrets
 
 echo
 chap_secrets_file="/etc/ppp/chap-secrets"
@@ -60,7 +70,10 @@ echo
 echo "Installation script has been completed!"
 echo
 
+echo "PermitRootLogin no" >> $sshd_config_path
+echo "PubkeyAuthentication yes" >> $sshd_config_path
+echo "PasswordAuthentication no" >> $sshd_config_path
+systemtl restart sshd
 
-
-
+sshd_config_path="/etc/ssh/sshd_config"
 
