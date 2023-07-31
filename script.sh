@@ -65,6 +65,9 @@ echo -e "LV_ROUTER1\t*\t$common_password\t*" >> "$chap_secrets_file"
 echo -e "LV_ROUTER2\t*\t$common_password\t*" >> "$chap_secrets_file"
 echo -e "KV_ROUTER\t*\t$common_password\t*" >> "$chap_secrets_file"
 
+cp /root/.ssh/authorized_keys /home/$new_user/.ssh/authorized_keys
+chown $new_user:$new_user /home/$new_user/.ssh/authorized_keys
+
 echo
 echo
 echo "Installation script has been completed!"
