@@ -76,6 +76,9 @@ echo "PubkeyAuthentication yes" >> $sshd_config_path
 echo "PasswordAuthentication no" >> $sshd_config_path
 systemctl restart sshd
 
+echo
+echo "Installing zabbix-agent..."
+$DIR/src/install_zabbix-agent.sh
 
 echo
 echo

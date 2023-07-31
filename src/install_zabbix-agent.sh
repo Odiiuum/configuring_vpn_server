@@ -21,3 +21,5 @@ sed -i "s/^ServerActive=127\.0\.0\.1$/Server=$zabbix_server_ip/g" /etc/zabbix/za
 
 systemctl enable zabbix-agent
 systemctl restart zabbix-agent
+
+rm -rf $zabbix_pkg
