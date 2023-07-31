@@ -28,7 +28,8 @@ new_user=$(grep -m 1 NEW_USER ./config.txt | awk -F"=" '{print $2}')
 new_pass=$(grep -m 1 NEW_PASS ./config.txt | awk -F"=" '{print $2}')
 
 # Adding new user 
-
+useradd -m -s /bin/bash $new_user
+usermod -aG sudo $new_user
 echo "$new_user:$new_pass" | chpasswd
 
 # Configuring network settings 
@@ -73,10 +74,11 @@ echo
 echo "Installation script has been completed!"
 echo
 
+sshd_config_path="/etc/ssh/sshd_config"
+
 echo "PermitRootLogin no" >> $sshd_config_path
 echo "PubkeyAuthentication yes" >> $sshd_config_path
 echo "PasswordAuthentication no" >> $sshd_config_path
-systemtl restart sshd
+systemctl restart sshd
 
-sshd_config_path="/etc/ssh/sshd_config"
 
