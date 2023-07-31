@@ -24,8 +24,8 @@ chmod -R 777 $DIR
 
 # Getting user login and pass from config.txt
 
-new_user=$(grep -m 1 NEW_USER ./config.txt | awk -F"=" '{print $2}')
-new_pass=$(grep -m 1 NEW_PASS ./config.txt | awk -F"=" '{print $2}')
+new_user=$(grep -m 1 NEW_USER $DIR/config.txt | awk -F"=" '{print $2}')
+new_pass=$(grep -m 1 NEW_PASS $DIR/config.txt | awk -F"=" '{print $2}')
 
 # Adding new user 
 useradd -m -s /bin/bash $new_user
@@ -65,8 +65,8 @@ echo -e "LV_ROUTER1\t*\t$common_password\t*" >> "$chap_secrets_file"
 echo -e "LV_ROUTER2\t*\t$common_password\t*" >> "$chap_secrets_file"
 echo -e "KV_ROUTER\t*\t$common_password\t*" >> "$chap_secrets_file"
 
-cp /root/.ssh/authorized_keys /home/$new_user/.ssh/authorized_keys
-chown $new_user:$new_user /home/$new_user/.ssh/authorized_keys
+cp $(/root/.ssh/authorized_keys /home/$new_user/.ssh/authorized_keys)
+chown $($new_user:$new_user /home/$new_user/.ssh/authorized_keys)
 
 echo
 echo
