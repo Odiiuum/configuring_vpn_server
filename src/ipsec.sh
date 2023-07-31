@@ -38,7 +38,7 @@ echo "$PPPCONFIG updated!"
 
 echo
 echo "Configuring PSK..."
-PSK=$(grep -m 1 PSK ../config.txt | awk -F"=" '{print $2}')
+PSK=$(grep -m 1 PSK $DIR/config.txt | awk -F"=" '{print $2}')
 
 echo -e "\n%any %any : PSK \"$PSK\"" >> $SECRETSFILE
 
